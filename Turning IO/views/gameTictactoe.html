@@ -1,0 +1,94 @@
+{% load staticfiles %}
+{% load url from future %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>App test from Turning IO</title>
+    <link rel="stylesheet" href="{% static "css/style.css" %}" media="screen">
+</head>
+<body>
+    <div id="main">
+        <div id="board">
+            <h3 class="turnPlayer">Player turn 1.</h3>
+            <div class="recuadro" onclick="sendPlay(this, 'HUMAN')"></div>
+            <div class="recuadro" onclick="sendPlay(this, 'HUMAN')"></div>
+            <div class="recuadro" onclick="sendPlay(this, 'HUMAN')"></div>
+            <div class="recuadro" onclick="sendPlay(this, 'HUMAN')"></div>
+            <div class="recuadro" onclick="sendPlay(this, 'HUMAN')"></div>
+            <div class="recuadro" onclick="sendPlay(this, 'HUMAN')"></div>
+            <div class="recuadro" onclick="sendPlay(this, 'HUMAN')"></div>
+            <div class="recuadro" onclick="sendPlay(this, 'HUMAN')"></div>
+            <div class="recuadro" onclick="sendPlay(this, 'HUMAN')"></div>
+            <button class="button" onclick="sendPlay(this, 'AI')"><strong>AI</strong></button>
+            <button class="button" onclick="reset()"><strong>Reset</strong></button>
+            <h3 class="statusGame"></h3>
+        </div>
+    </div>
+
+<script type="text/javascript">
+var recuadros=document.getElementsByClassName("recuadro");
+var state=[0,0,0,0,0,0,0,0,0];
+var game=true;
+var HUMAN=false;
+var COMPUTER=true;
+var currentPlayer=HUMAN;
+var HUMVAL = -1;
+var COMVAL = 1;
+var shooter = 1;
+
+function reset(){
+    for(var x=0;x<9;x++){
+        recuadros[x].style.background="#fff";
+        recuadros[x].innerHTML="";
+        state[x]=0;
+    }
+    game=true;
+    var x = document.getElementsByClassName("turnPlayer");
+    x[0].innerHTML = 'Player turn 1.';
+    var y = document.getElementsByClassName("statusGame");
+    y[0].innerHTML = '';
+    shooter = 1;
+}
+
+function sendPlay(clicked, apply){
+    if (!game) return;
+    currentPlayer = apply == 'HUMAN'? true : false;
+    var pos = 0;
+    var habil = true;
+    for (var x=0; x<9; x++){
+        if (recuadros[x] == clicked && state[x] == 0){
+            pos = x;
+            habil = true;
+            break;
+        } else { habil = false; }
+    }
+    habil = apply == 'HUMAN'? habil : true;
+    if (habil == true){
+        var scr = document.createElement('script');
+        scr.id = '_scr';
+        scr.src = 'sendPlay';
+        scr.src = scr.src + '/' + pos + '/' + currentPlayer + '/' + shooter + '/' + btoa(JSON.stringify(state));
+        document.body.appendChild(scr);
+        scr.onload = function() {
+            document.getElementById('_scr').outerHTML = '';
+            if (apply == 'HUMAN'){ state[pos] = shooter; } 
+            else { pos = response.indexAI; state[response.indexAI] = shooter; }
+            recuadros[pos].style.background = shooter == 1? "#3C648F" : "#BFC26F";
+            var x = document.getElementsByClassName("turnPlayer");
+            x[0].innerHTML = response.next_turn_player;
+            shooter = shooter == 1? 2 : 1;
+            var y = document.getElementsByClassName("statusGame");
+            y[0].innerHTML = response.msg_game;
+            game = response.state_game
+            
+        };
+    }
+}
+
+</script>
+
+</body>
+</html>
+
+

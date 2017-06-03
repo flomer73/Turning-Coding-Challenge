@@ -1,0 +1,41 @@
+
+Ya con un ambiente Python-Django estable:
+
+Ejecutar primero el bat: game_tictactoe.bat
+
+En un navegador (Excepto IE) introducir la URL del Game
+http://127.0.0.1:8000/tictactoe
+
+Pruebas Unitarias:
+1.- Juego entre 2 players humanos en su turno correspondiente
+	1.1.- Probar un ganador
+	1.2.- Probar sin ganador
+
+2.- Juego entre 1 player humano y AI en su turno correspondiente
+	1.1.- Probar un ganador
+	1.2.- Probar sin ganador
+
+3.- Juego entre los 2 turnos modo AI
+	1.1.- Probar un ganador
+	1.2.- Probar sin ganador
+
+4.- Reinicia Juego
+
+Cumple con los requisitos:
+1. Tener una IA inmejorable
+2. Muestra una tabla en blanco tic tac toe board
+3. Alterna vueltas entre el Jugador Uno (X) y el Jugador Dos (O)
+4. Determinar el final del juego
+5. Mostrar el jugador ganador
+
+Respuestas:
+	a.- Turnos
+	b.- Jugador ganador
+	c.- Juego sin ganador
+	d.- Ganador "Computer" en caso que el turno lo aplico por AI
+	e.- Indica finalización del juego
+	f.- Indica el siguiente turno
+
+
+
+
